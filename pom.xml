@@ -2,13 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>test</groupId>
-	<artifactId>test</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>test</name>
-	<url>http://maven.apache.org</url>
+	<url>http://casmi.github.io/gallery/geneview.html</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,9 +21,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>casmi</groupId>
+			<groupId>com.github.casmi</groupId>
 			<artifactId>casmi</artifactId>
-			<version>0.0.4-SNAPSHOT</version>
+			<version>0.3.2</version>
 		</dependency>
 
 		<dependency>
@@ -36,4 +33,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<groupId>jp.xcoo.casmi</groupId>
+	<artifactId>geneview</artifactId>
+	<name>gene view</name>
 </project>
