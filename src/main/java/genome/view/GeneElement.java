@@ -20,54 +20,52 @@ package genome.view;
 
 import genome.data.Exon;
 import genome.data.Gene;
-import casmi.graphics.color.Color;
 import casmi.graphics.color.ColorSet;
-import casmi.graphics.element.MouseOver;
+import casmi.graphics.color.RGBColor;
 import casmi.graphics.element.Rect;
 
 /**
- * element for drawing Exon and Gene 
- * 
+ * element for drawing Exon and Gene
+ *
  * @author K. Nishimura
  *
  */
 public class GeneElement {
-	
+
 	private static final double EXON_RECT_HEIGHT = 20;
 	private static final double GENE_RECT_HEIGHT = 8;
-	
+
 	private Rect rect;
-	private MouseOver mrect;
-	
+
 	private double x;
 	private double y;
-	
+
 	private String name;
-	
+
 	private double scale;
-	
+
 	public GeneElement(Exon rge, double scale) {
 		this.scale = scale;
-		
+
 		this.name = ""; //rge.getID();
 
 		this.x = 0;
 		this.y = 0;
-		
+
 		this.rect = makeRect(rge);
-		this.mrect = new MouseOver(rect);
+//		this.mrect = new MouseOver(rect);
 	}
-	
+
 	public GeneElement(Gene rgg, double scale){
 		this.scale = scale;
-		
+
 		this.name = rgg.getGroup();
 
 		this.x = 0;
 		this.y = 0;
-		
+
 		this.rect = makeRect(rgg);
-		this.mrect = new MouseOver(rect);
+//		this.mrect = new MouseOver(rect);
 	}
 
 	/*
@@ -76,73 +74,73 @@ public class GeneElement {
     private Rect makeRect(Exon e){
     	Rect r = new Rect(getScale() * e.getLength(), EXON_RECT_HEIGHT);
     	r.setStroke(false);
-    	
+
     	switch( e.getType() ) {
 		case KNOWN:
-			r.setFillColor(new Color(134, 186, 104));
+			r.setFillColor(new RGBColor(134, 186, 104));
 			break;
 		case REFERENCE_SEQUENCE:
-			r.setFillColor(new Color(134, 186, 204));
+			r.setFillColor(new RGBColor(134, 186, 204));
 			break;
 		case OTHER:
-			r.setFillColor(Color.color(ColorSet.WHITE));
+			r.setFillColor(ColorSet.WHITE);
 			break;
 		}
-    	
+
     	return r;
     }
-    
+
 	/*
      * to set up hit rect
      */
     private Rect makeRect(Gene g){
 		Rect r= new Rect(getScale() * g.getLength(), GENE_RECT_HEIGHT);
-		
+
 		r.setStroke(false);
-		
+
 		switch( g.getType() ) {
 		case KNOWN:
-			r.setFillColor(new Color(134, 186, 104));
+			r.setFillColor(new RGBColor(134, 186, 104));
 			break;
 		case REFERENCE_SEQUENCE:
-			r.setFillColor(new Color(134, 186, 204));
+			r.setFillColor(new RGBColor(134, 186, 204));
 			break;
 		case OTHER:
-			r.setFillColor(Color.color(ColorSet.WHITE));
+			r.setFillColor(ColorSet.WHITE);
 			break;
 		}
 
     	return r;
-    }	    
-  
+    }
+
 	public Rect getRect() {
 		return rect;
 	}
-	
+
 	public void setRect(Rect rect) {
 		this.rect = rect;
 	}
-	
-	public boolean isMouseOver(int x, int y) {
-		return this.mrect.isMouseOver(x, y); 
-	}
+
+//	public boolean isMouseOver(int x, int y) {
+//		return this.mrect.isMouseOver(x, y);
+//	}
 
 	public double getX() {
 		return x;
 	}
-	
+
 	public void setX(double x) {
 		this.x = x;
 	}
-	
+
 	public double getY() {
 		return y;
 	}
-	
+
 	public void setY(double y) {
 		this.y = y;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
