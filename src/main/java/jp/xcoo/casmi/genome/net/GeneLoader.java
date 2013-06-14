@@ -16,12 +16,8 @@
  * limitations under the License.
  */
 
-package genome.net;
+package jp.xcoo.casmi.genome.net;
 
-import genome.data.Exon;
-import genome.data.Gene;
-import genome.data.ViewScale;
-import genome.parse.GeneXMLParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +25,10 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.xcoo.casmi.genome.data.Exon;
+import jp.xcoo.casmi.genome.data.Gene;
+import jp.xcoo.casmi.genome.data.ViewScale;
+import jp.xcoo.casmi.genome.parse.GeneXMLParser;
 import casmi.io.Reader;
 import casmi.io.exception.ParserException;
 import casmi.io.net.HTTP;
@@ -116,7 +116,6 @@ public class GeneLoader {
 	 * Read RefGene Data to connect DAS server using type=refGene
 	 */
 	private void readFromServer(String url, String cachePath) {
-
 		HTTP http = null;
 		Reader reader = null;
 		XML xml = new XML();
@@ -204,6 +203,8 @@ public class GeneLoader {
     		case OrientationMinus:
     			order --;
     			break;
+    		case OrientationUnknown:
+    		    break;
     		}
 
     		for(Gene tg: tmpGenes) {
@@ -218,6 +219,8 @@ public class GeneLoader {
     		    		case OrientationMinus:
     		    			order --;
     		    			break;
+    		    		case OrientationUnknown:
+    		                break;
     		    		}
     				}
     			}

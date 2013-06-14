@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package genome.data.type;
+package jp.xcoo.casmi.genome.data.type;
 
 /**
  * gene orientations

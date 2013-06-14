@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package genome.data;
+package jp.xcoo.casmi.genome.data;
 
 /**
  * Scale for sequence
