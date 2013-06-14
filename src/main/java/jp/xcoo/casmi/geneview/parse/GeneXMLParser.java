@@ -16,16 +16,16 @@
  * limitations under the License.
  */
 
-package jp.xcoo.casmi.genome.parse;
+package jp.xcoo.casmi.geneview.parse;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.xcoo.casmi.genome.data.Exon;
-import jp.xcoo.casmi.genome.data.ViewScale;
-import jp.xcoo.casmi.genome.data.type.GeneOrientaion;
-import jp.xcoo.casmi.genome.data.type.GeneType;
+import jp.xcoo.casmi.geneview.data.Exon;
+import jp.xcoo.casmi.geneview.data.ViewScale;
+import jp.xcoo.casmi.geneview.data.type.GeneOrientaion;
+import jp.xcoo.casmi.geneview.data.type.GeneType;
 
 import casmi.io.parser.XMLElement;
 

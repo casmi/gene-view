@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-package jp.xcoo.casmi.genome.data.type;
+package jp.xcoo.casmi.geneview.data.type;
 
 /**
- * gene types
+ * gene orientations
  * 
  * @author K. Nishimura
  *
  */
-public enum GeneType {
-	KNOWN, REFERENCE_SEQUENCE, OTHER
+public enum GeneOrientaion {
+	OrientationPlus, OrientationMinus, OrientationUnknown
 }

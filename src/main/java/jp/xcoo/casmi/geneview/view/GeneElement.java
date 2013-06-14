@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package jp.xcoo.casmi.genome.view;
+package jp.xcoo.casmi.geneview.view;
 
-import jp.xcoo.casmi.genome.data.Exon;
-import jp.xcoo.casmi.genome.data.Gene;
+import jp.xcoo.casmi.geneview.data.Exon;
+import jp.xcoo.casmi.geneview.data.Gene;
 import casmi.graphics.color.ColorSet;
 import casmi.graphics.color.RGBColor;
 import casmi.graphics.element.Rect;

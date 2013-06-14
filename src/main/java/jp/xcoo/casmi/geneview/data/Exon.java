@@ -16,157 +16,114 @@
  * limitations under the License.
  */
 
-package jp.xcoo.casmi.genome.data;
+package jp.xcoo.casmi.geneview.data;
 
-import jp.xcoo.casmi.genome.data.type.GeneOrientaion;
-import jp.xcoo.casmi.genome.data.type.GeneType;
+import jp.xcoo.casmi.geneview.data.type.GeneOrientaion;
+import jp.xcoo.casmi.geneview.data.type.GeneType;
 
 /**
- * Gene for connecting exons and introns
+ * Exon in Gene
  * 
  * @author K. Nishimura
  *
  */
-public class Gene {
-	
-	public static final String KNOWN_GENE_TYPE_NAME ="knownGene";
-	
-	private int id;
+public class Exon {
+
 	private String chr;
 	private int start;
 	private int end;
+	private String id;
 	private GeneOrientaion orientation;
+	private String ref;
 	private String group;
 	private GeneType type;
 	private int order;
 
-	public Gene(String group, String chr, int start, int end, GeneOrientaion orientation, GeneType type){
+	public Exon(String id, String chr, int start, int end, GeneOrientaion orientation, String ref, String group, GeneType type){
+		this.id = id;
 		this.chr = chr;
-		this.group = group;
 		this.start = start;
 		this.end = end;
 		this.orientation = orientation;
+		this.ref = ref;
+		this.group = group;
 		this.type = type;
 		this.order = 0;
-	}
-	
-	@Override
-	public boolean equals(Object obj){
-		if( obj instanceof Gene ) {
-			return false;
-		}
-		
-		Gene other = (Gene)obj;
-		
-		if( other.getID() == this.id && other.getGroup().equalsIgnoreCase(this.group) ){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
-	@Override
-	public int hashCode(){
-		return (this.id + ":" + this.chr + ":" + this.group).hashCode();
-	}
-	
-	public int getID() {
-		return id;
-	}
-	
-	public void setID(int id) {
-		this.id = id;
 	}
 	
 	public String getChr() {
 		return chr;
 	}
-	
+
 	public void setChr(String chr) {
 		this.chr = chr;
 	}
-	
+
 	public int getStart() {
 		return start;
 	}
-	
+
 	public void setStart(int start) {
 		this.start = start;
 	}
-	
+
 	public int getEnd() {
 		return end;
 	}
-	
+
 	public void setEnd(int end) {
 		this.end = end;
 	}
-	
+
+	public int getLength() {
+		return Math.abs(this.end - this.start);
+	}
+
+	public String getID() {
+		return id;
+	}
+
+	public void setID(String featureid) {
+		this.id = featureid;
+	}
+
 	public GeneOrientaion getOrientation() {
 		return orientation;
 	}
-	
+
 	public void setOrientation(GeneOrientaion orientation) {
 		this.orientation = orientation;
 	}
-	
+
+	public String getRef() {
+		return ref;
+	}
+
+	public void setRef(String ref) {
+		this.ref = ref;
+	}
+
 	public String getGroup() {
 		return group;
 	}
-	
+
 	public void setGroup(String group) {
 		this.group = group;
 	}
-	
+
 	public GeneType getType() {
 		return type;
 	}
-	
+
 	public void setType(GeneType type) {
 		this.type = type;
-	}
-	
-	public int getLength() {
-		return Math.abs(this.end - this.start);
 	}
 
 	public int getOrder() {
 		return order;
 	}
-	
+
 	public void setOrder(int order) {
 		this.order = order;
-	}
-	
-	public int getLeft() {
-		if( this.start < this.end ) {
-			return this.start;
-		} else {
-			return this.end;
-		}
-	}
-	
-	public int getRight() {
-		if( this.start > this.end ) {
-			return this.start;
-		} else {
-			return this.end;
-		}
-	}
-	
-	public boolean checkOverlap(Gene other) {
-		
-		double left = this.getLeft(), right = this.getRight();
-		double otherLeft = other.getLeft(), otherRight = other.getRight();
-		
-		if(left >= otherLeft && left <= otherRight){
-			return true;
-		}else if(right >= otherLeft && right <= otherRight){
-			return true;
-		}else if(left < otherLeft && right > otherRight){
-			return true;
-		}else{
-			return false;
-		}
 	}
 }

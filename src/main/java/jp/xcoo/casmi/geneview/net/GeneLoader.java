@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package jp.xcoo.casmi.genome.net;
+package jp.xcoo.casmi.geneview.net;
 
 
 import java.io.File;
@@ -25,10 +25,10 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.xcoo.casmi.genome.data.Exon;
-import jp.xcoo.casmi.genome.data.Gene;
-import jp.xcoo.casmi.genome.data.ViewScale;
-import jp.xcoo.casmi.genome.parse.GeneXMLParser;
+import jp.xcoo.casmi.geneview.data.Exon;
+import jp.xcoo.casmi.geneview.data.Gene;
+import jp.xcoo.casmi.geneview.data.ViewScale;
+import jp.xcoo.casmi.geneview.parse.GeneXMLParser;
 import casmi.io.Reader;
 import casmi.io.exception.ParserException;
 import casmi.io.net.HTTP;

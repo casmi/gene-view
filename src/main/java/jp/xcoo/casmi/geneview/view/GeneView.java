@@ -16,18 +16,17 @@
  * limitations under the License.
  */
 
-package jp.xcoo.casmi.genome.view;
+package jp.xcoo.casmi.geneview.view;
 
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.xcoo.casmi.genome.data.Exon;
-import jp.xcoo.casmi.genome.data.Gene;
-import jp.xcoo.casmi.genome.data.ViewScale;
-import jp.xcoo.casmi.genome.net.GeneLoader;
-
+import jp.xcoo.casmi.geneview.data.Exon;
+import jp.xcoo.casmi.geneview.data.Gene;
+import jp.xcoo.casmi.geneview.data.ViewScale;
+import jp.xcoo.casmi.geneview.net.GeneLoader;
 import casmi.Applet;
 import casmi.AppletRunner;
 import casmi.KeyEvent;
@@ -294,9 +293,10 @@ public class GeneView extends Applet
             }
         }
     }
+
     public static void main( String[] args )
     {
-        AppletRunner.run("genome.view.GeneView", "Gene View");
+        AppletRunner.run("jp.xcoo.casmi.geneview.view.GeneView", "Gene View");
     }
 }
 
