@@ -32,10 +32,11 @@ import casmi.AppletRunner;
 import casmi.KeyEvent;
 import casmi.MouseButton;
 import casmi.MouseEvent;
+import casmi.callback.MouseOverCallback;
+import casmi.callback.MouseOverEventType;
 import casmi.graphics.color.ColorSet;
 import casmi.graphics.element.Element;
 import casmi.graphics.element.Line;
-import casmi.graphics.element.MouseOverCallback;
 import casmi.graphics.element.Text;
 import casmi.graphics.font.Font;
 import casmi.graphics.group.Group;
@@ -193,10 +194,10 @@ public class GeneView extends Applet
 
     		ge.addMouseEventCallback(new MouseOverCallback() {
 
-                public void run(MouseOverTypes eventtype, Element element) {
+                public void run(MouseOverEventType eventType, Element element) {
                     GeneElement e = (GeneElement) element;
 
-                    switch(eventtype) {
+                    switch(eventType) {
                     case ENTERED:
                         e.setSelected(true);
                         break;
@@ -215,7 +216,7 @@ public class GeneView extends Applet
     		geneElements.add(ge);
     	}
 
-    	geneGroup.setPosition(WIDTH / 2.0, HEIGHT / 2.0);
+    	geneGroup.setPosition(WIDTH / 2.0, HEIGHT / 3.0);
 
     	addObject(geneGroup);
 	}
@@ -254,7 +255,7 @@ public class GeneView extends Applet
     	scaleMainLine.setStrokeColor(ColorSet.WHITE);
     	scaleGroup.add(scaleMainLine);
 
-    	scaleGroup.setPosition(WIDTH / 2.0, HEIGHT / 2.0);
+    	scaleGroup.setPosition(WIDTH / 2.0, HEIGHT / 3.0);
 
     	addObject(scaleGroup);
     }
