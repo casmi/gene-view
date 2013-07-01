@@ -29,6 +29,7 @@ import jp.xcoo.casmi.geneview.data.ViewScale;
 import jp.xcoo.casmi.geneview.net.GeneLoader;
 import casmi.Applet;
 import casmi.AppletRunner;
+import casmi.CursorMode;
 import casmi.KeyEvent;
 import casmi.MouseButton;
 import casmi.MouseStatus;
@@ -73,10 +74,6 @@ public class GeneView extends Applet
 	private double scrollSpeed = 0.0;
 
     private List<GeneElement> geneElements = new ArrayList<GeneElement>();
-
-//    private Line scaleMainLine;
-//    private List<Line> scaleLines = new ArrayList<Line>();
-//    private List<Text> scaleTexts = new ArrayList<Text>();
 
     private Text titleText;
     private String annotation = "Annotation";
@@ -161,9 +158,11 @@ public class GeneView extends Applet
         }
 
         if (selected != null) {
+            setCursor(CursorMode.HAND);
             annotationText.setText(selected.getName());
             annotationText.setPosition(selected.getX() + scroll, selected.getY() + HEIGHT / 3.0);
         } else {
+            setCursor(CursorMode.DEFAULT);
             annotationText.setText("");
         }
 	}
