@@ -31,15 +31,15 @@ import casmi.Applet;
 import casmi.AppletRunner;
 import casmi.KeyEvent;
 import casmi.MouseButton;
-import casmi.MouseEvent;
+import casmi.MouseStatus;
 import casmi.callback.MouseOverCallback;
 import casmi.callback.MouseOverEventType;
+import casmi.graphics.canvas.Canvas;
 import casmi.graphics.color.ColorSet;
 import casmi.graphics.element.Element;
 import casmi.graphics.element.Line;
 import casmi.graphics.element.Text;
 import casmi.graphics.font.Font;
-import casmi.graphics.group.Group;
 
 /**
  * Class for Gene View
@@ -73,9 +73,10 @@ public class GeneView extends Applet
 	private double scrollSpeed = 0.0;
 
     private List<GeneElement> geneElements = new ArrayList<GeneElement>();
-    private Line scaleMainLine;
-    private List<Line> scaleLines = new ArrayList<Line>();
-    private List<Text> scaleTexts = new ArrayList<Text>();
+
+//    private Line scaleMainLine;
+//    private List<Line> scaleLines = new ArrayList<Line>();
+//    private List<Text> scaleTexts = new ArrayList<Text>();
 
     private Text titleText;
     private String annotation = "Annotation";
@@ -88,19 +89,15 @@ public class GeneView extends Applet
 	private static int WIDTH = 1024;
 	private static int HEIGHT = 768;
 
-	private Group geneGroup;
-	private Group scaleGroup;
+	private Canvas geneCanvas;
+	private Canvas scaleCanvas;
 
 	@Override
 	public void setup() {
 
 		// load gene info
-	    System.out.println("started to load");
-
 	    GeneLoader loader = new GeneLoader();
 		loader.load(REMOTE_DATA_URL);
-
-		System.out.println("finished loading");
 
 		genes = loader.getGenes();
 		exons = loader.getExons();
@@ -109,8 +106,13 @@ public class GeneView extends Applet
 		setFPS(FPS);
 		setSize(WIDTH, HEIGHT);
 
-		setupRefGene();
-        setupScale();
+		geneCanvas = createGeneCanvas(genes, exons, scale, viewScale, geneElements);
+		geneCanvas.setPosition(WIDTH / 2.0, HEIGHT / 3.0);
+		addCanvas(geneCanvas);
+
+        scaleCanvas = createScaleCanvas(scale, viewScale);
+        scaleCanvas.setPosition(WIDTH / 2.0, HEIGHT / 3.0);
+        addCanvas(scaleCanvas);
 
         {
             Font f = new Font("San-Serif");
@@ -122,6 +124,8 @@ public class GeneView extends Applet
         titleText.setPosition(WIDTH / 2.0, HEIGHT - 40);
         addObject(titleText);
 
+        Canvas annotationCanvas = new Canvas();
+
         {
             Font f = new Font("Sans-Serif");
             f.setSize(14);
@@ -129,8 +133,10 @@ public class GeneView extends Applet
             annotationText = new Text(annotation, f, 0, 10);
             annotationText.setStrokeColor(ColorSet.WHITE);
         }
-        annotationText.setPosition(WIDTH / 2.0, HEIGHT / 2.0);
-        addObject(annotationText);
+        annotationText.setPosition(0, 0);
+        annotationCanvas.add(annotationText);
+
+        addCanvas(annotationCanvas);
 	}
 
 	@Override
@@ -143,8 +149,8 @@ public class GeneView extends Applet
 		    scrollSpeed = 0.0;
 		}
 
-		geneGroup.setX(scroll);
-		scaleGroup.setX(scroll);
+		geneCanvas.setX(scroll);
+		scaleCanvas.setX(scroll);
 
 		GeneElement selected = null;
 
@@ -156,7 +162,7 @@ public class GeneView extends Applet
 
         if (selected != null) {
             annotationText.setText(selected.getName());
-            annotationText.setPosition(selected.getX() + scroll, selected.getY() + HEIGHT / 2.0);
+            annotationText.setPosition(selected.getX() + scroll, selected.getY() + HEIGHT / 3.0);
         } else {
             annotationText.setText("");
         }
@@ -166,10 +172,12 @@ public class GeneView extends Applet
     public void exit() {
     }
 
-	private void setupRefGene(){
-	    geneGroup = new Group();
+	private static Canvas createGeneCanvas(List<Gene> genes, List<Exon> exons,
+	                                       double scale, ViewScale viewScale,
+	                                       List<GeneElement> elements){
+	    Canvas canvas = new Canvas();
 
-    	geneElements.clear();
+	    elements.clear();
 
     	for( Exon e: exons ){
     		GeneElement ge = new GeneElement(e, scale);
@@ -179,12 +187,12 @@ public class GeneView extends Applet
 
     		ge.setPosition(x, y);
 
-    		geneGroup.add(ge);
+    		canvas.add(ge);
 
-    		geneElements.add(ge);
+    		elements.add(ge);
     	}
 
-    	for( Gene g: this.genes ){
+    	for( Gene g: genes ){
     		GeneElement ge = new GeneElement(g, scale);
 
     		double x = ((g.getEnd() + g.getStart())/2.0 - viewScale.getStart() - viewScale.getLength() / 2.0) * scale;
@@ -211,24 +219,19 @@ public class GeneView extends Applet
                 }
             });
 
-    		geneGroup.add(ge);
+    		canvas.add(ge);
 
-    		geneElements.add(ge);
+    		elements.add(ge);
     	}
 
-    	geneGroup.setPosition(WIDTH / 2.0, HEIGHT / 3.0);
-
-    	addObject(geneGroup);
+    	return canvas;
 	}
 
-    private void setupScale(){
-        scaleGroup = new Group();
+    private static Canvas createScaleCanvas(double scale, ViewScale viewScale){
+        Canvas canvas = new Canvas();
 
     	Font f = new Font("San-Serif");
         f.setSize(10);
-
-        scaleLines.clear();
-        scaleTexts.clear();
 
         final int length = viewScale.getLength();
         final int halfLength = length / 2;
@@ -240,29 +243,25 @@ public class GeneView extends Applet
     		Line l = new Line( (i * step - halfLength ) * scale, HALF_SCALE_HEIGHT,
 					   		   (i * step - halfLength ) * scale, - HALF_SCALE_HEIGHT);
     		l.setStrokeColor(ColorSet.WHITE);
-    		scaleLines.add(l);
-    		scaleGroup.add(l);
+    		canvas.add(l);
 
     		Text t = new Text(Integer.toString((int)(i * step + viewScale.getStart())), f,
     						  (int)((i * step - halfLength ) * scale),
     						  (int)-SCALE_HEIGHT);
     		t.setStrokeColor(ColorSet.WHITE);
-    		scaleTexts.add(t);
-    		scaleGroup.add(t);
+    		canvas.add(t);
     	}
 
-    	scaleMainLine = new Line(- scale * halfLength, 0, scale * halfLength, 0);
+    	Line scaleMainLine = new Line(- scale * halfLength, 0, scale * halfLength, 0);
     	scaleMainLine.setStrokeColor(ColorSet.WHITE);
-    	scaleGroup.add(scaleMainLine);
+    	canvas.add(scaleMainLine);
 
-    	scaleGroup.setPosition(WIDTH / 2.0, HEIGHT / 3.0);
-
-    	addObject(scaleGroup);
+    	return canvas;
     }
 
     @Override
-    public void mouseEvent(MouseEvent e, MouseButton b) {
-        if (e == MouseEvent.DRAGGED) {
+    public void mouseEvent(MouseStatus e, MouseButton b) {
+        if (e == MouseStatus.DRAGGED) {
             double diffX = getMouseX() - getPrevMouseX();
             double diffY = getMouseY() - getPrevMouseY();
 
