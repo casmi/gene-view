@@ -31,8 +31,10 @@ import casmi.Applet;
 import casmi.AppletRunner;
 import casmi.CursorMode;
 import casmi.KeyEvent;
+import casmi.Keyboard;
+import casmi.Mouse;
 import casmi.MouseButton;
-import casmi.MouseStatus;
+import casmi.MouseEvent;
 import casmi.callback.MouseOverCallback;
 import casmi.callback.MouseOverEventType;
 import casmi.graphics.canvas.Canvas;
@@ -201,6 +203,7 @@ public class GeneView extends Applet
 
     		ge.addMouseEventCallback(new MouseOverCallback() {
 
+                @Override
                 public void run(MouseOverEventType eventType, Element element) {
                     GeneElement e = (GeneElement) element;
 
@@ -259,10 +262,10 @@ public class GeneView extends Applet
     }
 
     @Override
-    public void mouseEvent(MouseStatus e, MouseButton b) {
-        if (e == MouseStatus.DRAGGED) {
-            double diffX = getMouseX() - getPrevMouseX();
-            double diffY = getMouseY() - getPrevMouseY();
+    public void mouseEvent(MouseEvent event, MouseButton button, Mouse mouse) {
+        if (event == MouseEvent.DRAGGED) {
+            double diffX = mouse.getX() - mouse.getPrevX();
+            double diffY = mouse.getY() - mouse.getPrevY();
 
             if(Math.abs(diffY) > MOUSE_SCALING_THRESHOLD) { // scaling
 
@@ -285,10 +288,10 @@ public class GeneView extends Applet
     }
 
     @Override
-    public void keyEvent(KeyEvent e) {
-        if (e == KeyEvent.PRESSED) {
-            if (getKeyCode() == 27) {
-                System.exit(0);
+    public void keyEvent(KeyEvent event, Keyboard keyboard) {
+        if (event == KeyEvent.PRESSED) {
+            if (keyboard.getKeyCode() == 27) {
+                close();
             }
         }
     }
